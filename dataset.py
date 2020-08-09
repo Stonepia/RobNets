@@ -30,10 +30,10 @@ def cifar10(data_root, batch_size, num_workers, distributed, cutout=False):
 
     train_sampler = None
     test_sampler = None
-    if distributed:
-        rank, world_size = get_dist_info()
-        train_sampler = torch.utils.data.distributed.DistributedSampler(trainset, num_replicas=world_size, rank=rank)
-        test_sampler = torch.utils.data.distributed.DistributedSampler(testset, num_replicas=world_size, rank=rank)
+    # if distributed:
+    rank, world_size = get_dist_info()
+    train_sampler = torch.utils.data.distributed.DistributedSampler(trainset, num_replicas=world_size, rank=rank)
+    test_sampler = torch.utils.data.distributed.DistributedSampler(testset, num_replicas=world_size, rank=rank)
 
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, sampler=train_sampler, num_workers=num_workers, shuffle=(train_sampler is None))
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size, sampler=test_sampler, num_workers=num_workers)
